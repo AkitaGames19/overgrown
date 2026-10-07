@@ -621,6 +621,7 @@ $('w-rooms').onclick = () => show('select'); $('w-replay').onclick = () => start
 $('w-next').onclick = () => { if (cur < ROOMS.length - 1) start(cur + 1); };
 function setMusic(on) { save.music = on; SFX.music(on); store(); $('btn-music-t').setAttribute('aria-pressed', on); $('btn-music-t').textContent = on ? 'Music on' : 'Music off'; }
 $('btn-music-t').onclick = () => { SFX.ctx(); setMusic(!save.music); };
+if (TOUCH) { const li = document.querySelectorAll('#how li'); li[0].innerHTML = '<em>Walk</em> with the arrow buttons. Every square you step on grows a <em class="h">hedge</em> overnight.'; li[1].innerHTML = '<em>Sleep</em> ends the day early. Each morning you start again from your <em class="m">doormat</em>.'; }
 $('btn-how').onclick = () => { $('how').hidden = false; }; $('how-ok').onclick = () => { $('how').hidden = true; };
 function setSound(on) { save.sound = on; SFX.muted = !on; store(); $('btn-sound').setAttribute('aria-pressed', on); $('btn-sound-t').setAttribute('aria-pressed', on); $('btn-sound-t').textContent = on ? 'Sound on' : 'Sound off'; }
 $('btn-sound').onclick = () => setSound(!save.sound); $('btn-sound-t').onclick = () => setSound(!save.sound);
@@ -655,7 +656,7 @@ function frame(now) {
 }
 
 const COACH = [
-  'Walk with the arrows or WASD. The fox steps when you step. Walk up and let it catch you.',
+  TOUCH ? 'Use the arrow buttons below to walk. The fox steps when you step. Walk up and let it catch you.' : 'Walk with the arrows or WASD. The fox steps when you step. Walk up and let it catch you.',
   'Your footprint grew into a hedge overnight, right between you and the fox. Step left.',
   'The fox follows. Now step back right...',
   '...and right again. See? The fox is stuck behind your hedge.',
@@ -672,7 +673,7 @@ function coach() {
   const T = G.tut; if (!T || mode !== 'play') return;
   let msg = '';
   if (G.won) msg = 'That is the trick: even getting caught can build the way out.';
-  else if (!G.tw) msg = G.moves < T.keys.length && key(G.s) === T.keys[G.moves] ? (COACH[G.moves] || '') : 'Not quite. Press Z to undo a step, or R to start the garden again.';
+  else if (!G.tw) msg = G.moves < T.keys.length && key(G.s) === T.keys[G.moves] ? (COACH[G.moves] || '') : (TOUCH ? 'Not quite. Tap Undo to take a step back, or Restart to try the garden again.' : 'Not quite. Press Z to undo a step, or R to start the garden again.');
   else return;
   if (msg !== T.last) { T.last = msg; const c = $('coach'); c.textContent = msg; c.hidden = !msg; c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop'); }
 }
