@@ -162,6 +162,36 @@ body.dusk #moves{color:var(--dim)}
 body.dusk #steps i.on{background:var(--mint)}
 body.dusk #coach{border-radius:16px;border-color:rgba(246,207,134,.55)}
 body.dusk #how em,body.dusk #how em.h{color:var(--mint)}
+
+/* ---- clean tiles + minimal UI, keeping the warm garden ---- */
+button,body.dusk button{border-radius:12px;border:0;background:transparent;box-shadow:none;color:#5d7a4f}
+button:hover:not(:disabled),body.dusk button:hover:not(:disabled){border:0;transform:none;color:#2f4a24}
+button:active:not(:disabled){transform:scale(.96);box-shadow:none}
+body.dusk button{color:#a9b9ad}body.dusk button:hover:not(:disabled){color:#ece3cc}
+.icon-btn{position:relative;width:48px;height:48px}
+.icon-btn svg{width:28px;height:28px;stroke-width:2.6}
+.icon-btn[data-key]::after{content:attr(data-key);position:absolute;right:-2px;bottom:0;min-width:16px;height:16px;padding:0 3px;border-radius:5px;background:#4e7a34;color:#fff;font:700 10px/16px var(--f-ui);text-align:center;box-sizing:border-box}
+body.dusk .icon-btn[data-key]::after{background:#e9b45a;color:#1a140b}
+.icon-btn[aria-pressed="false"]{color:#b9c9ad}
+.nap-btn,body.dusk .nap-btn{height:44px;padding:0 20px;border-radius:999px;background:#2f4a24;color:#fff;box-shadow:0 4px 12px rgba(47,74,36,.22)}
+body.dusk .nap-btn{background:#e9b45a;color:#1a140b}
+.nap-btn:hover:not(:disabled){background:#3d5e30;color:#fff}
+.chip,body.dusk .chip{border:0;background:transparent;box-shadow:none;color:#6f8a5f;font-weight:600}
+.chip.ghost{color:#9bb08c}
+.lv{border:0;box-shadow:0 3px 0 #b9d6a6,0 6px 14px rgba(47,74,36,.12);background:#fbfdf6}
+.lv.done{background:#dff2d2}
+#coach,body.dusk #coach{border:0;border-radius:16px;box-shadow:0 10px 30px rgba(47,74,36,.18)}
+#win .card,#stuck .card,#how .card{border:0;border-radius:20px;box-shadow:0 20px 50px rgba(47,74,36,.22)}
+#win .row button,#stuck .row button{color:#6f8a5f}
+#win .row .primary,#stuck .row .primary{background:#2f4a24;color:#fff;border-radius:999px;box-shadow:none;padding:8px 26px}
+.dpad button{background:#fbfdf6;box-shadow:0 3px 0 #b9d6a6;border-radius:14px;color:#2f4a24}
+
+
+.lv.night.done{background:#3a4876;color:#e6e9ff;box-shadow:0 3px 0 #1b1e3a}
+.lv.night.done::after{background:#7fd36a}
+.lv.night:hover:not(:disabled){color:#fff}
+.icon-btn[data-key]::after{bottom:4px;right:-6px}
+#btn-back[data-key]::after{bottom:auto;top:2px}
 </style>
 <div id="app">
   <canvas id="board"></canvas>
@@ -188,14 +218,14 @@ body.dusk #how em,body.dusk #how em.h{color:var(--mint)}
   </div>
   <div class="screen" id="s-play" hidden style="pointer-events:none">
     <div id="hud">
-      <button class="icon-btn" id="btn-back" aria-label="Rooms"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></button>
+      <button class="icon-btn" id="btn-back" data-key="Esc" aria-label="Rooms"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></button>
       <div id="info"><div class="top"><span id="rname">1</span><span id="dayl">Day 1</span><span id="moves">0</span></div><div id="spare"><span id="days"></span><span id="steps"></span></div></div>
       <button class="icon-btn bot-btn" id="btn-bot" aria-label="Bot: one move (B)" title="Bot: one move (B)" hidden><svg viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16.5h5"/></svg></button>
       <button class="icon-btn bot-btn" id="btn-bot-auto" aria-label="Bot: solve (V)" title="Bot: solve on/off (V)" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><path d="M5 5l7 7-7 7M12 5l7 7-7 7"/></svg></button>
       <button class="nap-btn" id="btn-nap" aria-label="Sleep (Space)" title="Sleep (Space)">Sleep</button>
-      <button class="icon-btn" id="btn-undo" aria-label="Undo (Z)"><svg viewBox="0 0 24 24"><path d="M8 5L4 9l4 4"/><path d="M4 9h10a5 5 0 0 1 0 10H9"/></svg></button>
-      <button class="icon-btn" id="btn-restart" aria-label="Restart (R)"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v5h-5"/></svg></button>
-      <button class="icon-btn" id="btn-sound" aria-label="Sound" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10z"/><path d="M16.5 9.5a3.5 3.5 0 0 1 0 5M19 7a7 7 0 0 1 0 10"/></svg></button>
+      <button class="icon-btn" id="btn-undo" data-key="Z" aria-label="Undo (Z)"><svg viewBox="0 0 24 24"><path d="M8 5L4 9l4 4"/><path d="M4 9h10a5 5 0 0 1 0 10H9"/></svg></button>
+      <button class="icon-btn" id="btn-restart" data-key="R" aria-label="Restart (R)"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v5h-5"/></svg></button>
+      <button class="icon-btn" id="btn-sound" data-key="M" aria-label="Sound" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10z"/><path d="M16.5 9.5a3.5 3.5 0 0 1 0 5M19 7a7 7 0 0 1 0 10"/></svg></button>
     </div>
     <div id="tip"></div>
     <div id="coach" hidden></div>
@@ -291,7 +321,7 @@ function solve(L, limit = 400000, s0) {
 if (typeof module !== 'undefined') module.exports = { foxStep, parse, init, move, sleep, night, moves, solve, key, gateOpen, step, DX, DY };
 
 // two looks: a bright garden for most of the game, dusk for the last stretch
-const PAL = { day: {grassA:'#8fd06c',grassB:'#88c966',blade:'rgba(60,120,40,.35)',bloom:'#fff7c2',h1:'#3f8f45',h2:'#58b052',h3:'#76c765',leaf:'#93dc7e',hshadow:'rgba(30,70,20,.3)',mat1:'#c9a27a',mat2:'#e6c79c',mat3:'#b5885c',matMark:'#a9784b',homeGlow:'rgba(255,240,180,0)',arch:'#fbf3cf',archFrame:'#8a5a2e',archFlower:'#f28bb0',pl1:'#9aa3a6',pl2:'#c3cbcd',pl3:'#7d8a8d',plMoss:'rgba(90,150,70,.6)',gate1:'#8a5a2e',gate2:'#b47a42',pond1:'#3f93c9',pond2:'#6cb8e6',pondShine:'rgba(255,255,255,.55)',lily:'#4f9a3f',moss:'#7fb85e',print:'#4e7a34',printLeaf:'#2f6b33',sprout1:'#5aab50',sprout2:'#6cc25e',den1:'#7a5a34',den2:'#9a7448',den3:'#3a2814',frame1:'#bfe0b0',frame2:'#e2f1d4'}, dusk: {grassA:'#3f6e4b',grassB:'#3b6947',blade:'rgba(12,30,18,.45)',bloom:'#e9dcae',h1:'#245c3a',h2:'#348049',h3:'#45975a',leaf:'#5fb172',hshadow:'rgba(5,20,12,.4)',mat1:'#7a5a3c',mat2:'#a9825a',mat3:'#8c6847',matMark:'#5e4129',homeGlow:'rgba(255,214,130,.35)',arch:'#ffe6a3',archFrame:'#4a3322',archFlower:'#e9c27a',pl1:'#56605e',pl2:'#7c8784',pl3:'#3d4644',plMoss:'rgba(40,80,50,.7)',gate1:'#4e3420',gate2:'#8a6440',pond1:'#1f4f6e',pond2:'#2d6a8c',pondShine:'rgba(255,236,190,.35)',lily:'#2f5a3c',moss:'#4b7552',print:'#1f3a2a',printLeaf:'#1c3b29',sprout1:'#4f8a5c',sprout2:'#3f7a52',den1:'#3e2e1e',den2:'#4f3b27',den3:'#140d07',frame1:'#2a3d33',frame2:'#16231d'} };
+const PAL = { day: {tileLip:'#6eb04f',tileShade:'rgba(50,90,30,.22)',grassA:'#9ad977',grassB:'#93d371',blade:'rgba(60,120,40,.35)',bloom:'#fff7c2',h1:'#3f8f45',h2:'#58b052',h3:'#76c765',leaf:'#93dc7e',hshadow:'rgba(30,70,20,.3)',mat1:'#c9a27a',mat2:'#e6c79c',mat3:'#b5885c',matMark:'#a9784b',homeGlow:'rgba(255,240,180,0)',arch:'#fbf3cf',archFrame:'#8a5a2e',archFlower:'#f28bb0',pl1:'#9aa3a6',pl2:'#c3cbcd',pl3:'#7d8a8d',plMoss:'rgba(90,150,70,.6)',gate1:'#8a5a2e',gate2:'#b47a42',pond1:'#3f93c9',pond2:'#6cb8e6',pondShine:'rgba(255,255,255,.55)',lily:'#4f9a3f',moss:'#7fb85e',print:'#4e7a34',printLeaf:'#2f6b33',sprout1:'#5aab50',sprout2:'#6cc25e',den1:'#7a5a34',den2:'#9a7448',den3:'#3a2814',frame1:'#bfe0b0',frame2:'#e2f1d4'}, dusk: {tileLip:'#2d523a',tileShade:'rgba(0,0,0,.35)',grassA:'#3f6e4b',grassB:'#3b6947',blade:'rgba(12,30,18,.45)',bloom:'#e9dcae',h1:'#245c3a',h2:'#348049',h3:'#45975a',leaf:'#5fb172',hshadow:'rgba(5,20,12,.4)',mat1:'#7a5a3c',mat2:'#a9825a',mat3:'#8c6847',matMark:'#5e4129',homeGlow:'rgba(255,214,130,.35)',arch:'#ffe6a3',archFrame:'#4a3322',archFlower:'#e9c27a',pl1:'#56605e',pl2:'#7c8784',pl3:'#3d4644',plMoss:'rgba(40,80,50,.7)',gate1:'#4e3420',gate2:'#8a6440',pond1:'#1f4f6e',pond2:'#2d6a8c',pondShine:'rgba(255,236,190,.35)',lily:'#2f5a3c',moss:'#4b7552',print:'#1f3a2a',printLeaf:'#1c3b29',sprout1:'#4f8a5c',sprout2:'#3f7a52',den1:'#3e2e1e',den2:'#4f3b27',den3:'#140d07',frame1:'#2a3d33',frame2:'#16231d'} };
 let P = PAL.day, THEME = 'day';
 function setTheme(n) { THEME = n; P = PAL[n]; if (typeof document !== 'undefined') document.body.classList.toggle('dusk', n === 'dusk'); }
 // garden art, one cell = 16 units
@@ -299,12 +329,15 @@ function rr(x, X, Y, w, h, r) { x.beginPath(); if (x.roundRect) x.roundRect(X, Y
 function fillRR(x, c, X, Y, w, h, r) { rr(x, X, Y, w, h, r); x.fillStyle = c; x.fill(); }
 function ell(x, c, cx, cy, rx, ry, rot = 0) { x.beginPath(); x.ellipse(cx, cy, Math.max(.01, rx), Math.max(.01, ry), rot, 0, Math.PI * 2); x.fillStyle = c; x.fill(); }
 function hash(x, y) { let h = x * 374761393 + y * 668265263; h = (h ^ (h >> 13)) * 1274126177; return ((h ^ (h >> 16)) >>> 0) / 4294967296; }
+// a floor tile: a rounded square of lawn with a darker lip and a soft shadow, a few blades and the odd flower
 function drawGrass(x, X, Y, tx, ty) {
-  x.fillStyle = (tx + ty) % 2 ? P.grassA : P.grassB; x.fillRect(X - .05, Y - .05, 16.1, 16.1);
+  fillRR(x, P.tileShade, X + .8, Y + 2.2, 14.4, 14.4, 2.8);
+  fillRR(x, P.tileLip, X + .8, Y + .8, 14.4, 14.8, 2.8);
+  fillRR(x, (tx + ty) % 2 ? P.grassA : P.grassB, X + .8, Y + .8, 14.4, 13.4, 2.8);
   const r = hash(tx, ty);
   x.strokeStyle = P.blade; x.lineWidth = .5; x.lineCap = 'round';
-  for (let k = 0; k < 4; k++) { const gx = X + 2 + ((r * 97 + k * 37) % 12), gy = Y + 3 + ((r * 53 + k * 29) % 11); x.beginPath(); x.moveTo(gx, gy + 1.6); x.lineTo(gx - .4, gy); x.moveTo(gx + .8, gy + 1.6); x.lineTo(gx + 1.2, gy + .2); x.stroke(); }
-  if (r > .82) { ell(x, P.bloom, X + 4 + r * 8, Y + 11, .8, .8); ell(x, '#f2c94c', X + 4 + r * 8, Y + 11, .35, .35); }
+  for (let k = 0; k < 2; k++) { const gx = X + 3.4 + ((r * 97 + k * 37) % 9), gy = Y + 3.6 + ((r * 53 + k * 29) % 8); x.beginPath(); x.moveTo(gx, gy + 1.5); x.lineTo(gx - .4, gy); x.moveTo(gx + .8, gy + 1.5); x.lineTo(gx + 1.2, gy + .2); x.stroke(); }
+  if (r > .85) { ell(x, P.bloom, X + 4 + r * 7, Y + 11, .8, .8); ell(x, '#f2c94c', X + 4 + r * 7, Y + 11, .35, .35); }
 }
 function drawHedge(x, X, Y, grow = 1, tx = 0, ty = 0, mine = false) {
   const k = grow; if (k <= 0) return;
@@ -376,14 +409,14 @@ function drawGate(x, X, Y, open) {
   fillRR(x, P.gate2, X + .4, Y + 6, 15.2, 1.6, .6); fillRR(x, P.gate2, X + .4, Y + 11, 15.2, 1.6, .6);
 }
 function drawPond(x, X, Y, tx, ty, wet, t) {
-  drawGrass(x, X, Y, tx, ty);
-  const up = wet(tx, ty - 1), dn = wet(tx, ty + 1), lf = wet(tx - 1, ty), rt = wet(tx + 1, ty);
-  const m = 1.2, x0 = X + (lf ? 0 : m), y0 = Y + (up ? 0 : m), x1 = X + 16 - (rt ? 0 : m), y1 = Y + 16 - (dn ? 0 : m), cr = (a, b) => a || b ? 0 : 5;
-  fillRR(x, P.pond1, x0, y0, x1 - x0, y1 - y0, [cr(up, lf), cr(up, rt), cr(dn, rt), cr(dn, lf)]);
-  fillRR(x, P.pond2, x0 + (lf ? 0 : 1), y0 + (up ? 0 : 1.4), x1 - x0 - (lf ? 0 : 1) - (rt ? 0 : 1), y1 - y0 - (up ? 0 : 1.4) - (dn ? 0 : .8), 4);
+  fillRR(x, P.tileShade, X + .8, Y + 2.2, 14.4, 14.4, 2.8);
+  fillRR(x, P.pond1, X + .8, Y + .8, 14.4, 14.8, 2.8);
+  fillRR(x, P.pond2, X + .8, Y + .8, 14.4, 13.4, 2.8);
   const r = hash(tx, ty), w = Math.sin(t * 1.6 + r * 6) * .8;
-  ell(x, P.pondShine, X + 5 + r * 5 + w, Y + 6 + r * 3, 2.2, .5, -.2);
-  if (r > .5) { ell(x, P.lily, X + 11, Y + 11, 2.2, 1.4); ell(x, P.bloom, X + 11.4, Y + 10.6, .6, .6); }
+  x.save(); x.strokeStyle = P.pondShine; x.lineWidth = .8; x.lineCap = 'round';
+  for (const yy of [5, 9]) { x.beginPath(); x.moveTo(X + 4 + w, Y + yy); x.quadraticCurveTo(X + 6 + w, Y + yy - 1.1, X + 8 + w, Y + yy); x.quadraticCurveTo(X + 10 + w, Y + yy + 1.1, X + 12 + w, Y + yy); x.stroke(); }
+  x.restore();
+  if (r > .5) { ell(x, P.lily, X + 11.4, Y + 11, 2, 1.2); ell(x, P.bloom, X + 11.8, Y + 10.6, .55, .55); }
 }
 function drawBridge(x, X, Y, vert) {
   x.save(); x.translate(X + 8, Y + 8); if (vert) x.rotate(Math.PI / 2);
@@ -761,10 +794,10 @@ function resize() {
   const r = cv.getBoundingClientRect(); cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
   if (mode !== 'play' || !G) return;
   const small = window.innerWidth < 560;
-  const top = (small ? 84 : 92) * dpr, bot = (TOUCH ? (G.tut ? 230 : 140) : (G.tut ? 116 : ROOMS[cur].tip ? 40 : 14)) * dpr, side = 12 * dpr;
+  const top = (small ? 84 : 84) * dpr, bot = (TOUCH ? (G.tut ? 230 : 140) : (G.tut ? 116 : ROOMS[cur].tip ? 56 : 30)) * dpr, side = 12 * dpr;
   const w = cv.width - side * 2, h = cv.height - top - bot;
   S = Math.min(w / G.L.w, h / (G.L.h + .2), 96 * dpr);
-  OX = Math.round((cv.width - G.L.w * S) / 2); OY = Math.round(top + (h - G.L.h * S) / 2 + S * .15);
+  OX = Math.round((cv.width - G.L.w * S) / 2); OY = Math.round(top + (h - G.L.h * S) / 2 + S * .06);
   // the coach box sits just under the garden
   if (!TOUCH) { const c = $('coach'), tp = $('tip'), y = Math.round((OY + G.L.h * S) / dpr + 14) + 'px'; c.style.bottom = 'auto'; c.style.top = y; tp.style.bottom = 'auto'; tp.style.top = y; }
 }
@@ -861,7 +894,7 @@ function drawGarden(dt) {
     if (L.stone[i]) drawStone(g, X, Y, x, y);
     else if (L.dirt[i]) drawDirt(g, X, Y, x, y);
     else if (L.pond[i]) { drawPond(g, X, Y, x, y, pondAt, time); if (view.bridges.includes(i)) drawBridge(g, X, Y, pondAt(x, y - 1) || pondAt(x, y + 1)); }
-    else drawGrass(g, X, Y, x, y);
+    else if (!L.wall[i]) drawGrass(g, X, Y, x, y);
     if (i === L.home) drawHome(g, X, Y);
     if (L.foxes.includes(i)) drawDen(g, X, Y);
     if (L.plates.includes(i)) drawPlate(g, X, Y, view.hedges.includes(i) || view.p === i);
