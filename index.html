@@ -675,7 +675,7 @@ function start(i) {
   G = { L, s: init(L), hist: [], moves: 0, clock: 0, tw: null, face: 2, bump: null, grow: new Map(), queue: null, won: false, fx: [] };
   $('rname').textContent = i + 1; $('tip').textContent = R.tip || '';
   G.tut = null; $('coach').hidden = true;
-  if (i === 0) {                      // the first garden holds your hand
+  if (i === 0 || i === 1) {           // the first two gardens hold your hand
     const path = solve(L); if (Array.isArray(path)) { const keys = [key(G.s)]; let s = G.s; for (const m of path) { s = m === 4 ? sleep(L, s) : move(L, s, m).s; keys.push(key(s)); } G.tut = { path, keys, last: '' }; }
     if (G.tut) $('tip').textContent = '';
   }
@@ -824,6 +824,17 @@ const COACH = [
   '...and right again. See? The fox is stuck behind your hedge.',
   'Run up to the garden gate!', 'Run up to the garden gate!', 'Run up to the garden gate!',
 ];
+// the second garden: the fox sits by the gate, so you lay a trail and let it catch you on purpose
+const COACH2 = [
+  'The fox is guarding the gate, and you can\'t outrun it. Build a wall first. Step left.',
+  'Now back right, across your doormat...',
+  '...and right again. Every square you walk on turns into a hedge overnight.',
+  'Now step up and let the fox catch you. The day ends, but your trail still grows.',
+  'Morning! A hedge now stands right below the fox. Go down and around.',
+  'Keep going right...', '...and right once more.',
+  'Now head up. The fox can\'t get past your hedge.', 'Up again...', 'Into the gate!',
+];
+const COACHES = [COACH, COACH2], COACH_WIN = ['That is the trick: even getting caught can build the way out.', 'Getting caught on purpose. Sometimes that is the plan.'];
 // the cell a fox would step to first if nothing were in the way
 function foxWants(L, s, f) {
   const fx = f % L.w, fy = f / L.w | 0, px = s.p % L.w, py = s.p / L.w | 0;
@@ -834,8 +845,8 @@ function foxWants(L, s, f) {
 function coach() {
   const T = G.tut; if (!T || mode !== 'play') return;
   let msg = '';
-  if (G.won) msg = 'That is the trick: even getting caught can build the way out.';
-  else if (!G.tw) msg = G.moves < T.keys.length && key(G.s) === T.keys[G.moves] ? (COACH[G.moves] || '') : (TOUCH ? 'Not quite. Tap Undo to take a step back, or Restart to try the garden again.' : 'Not quite. Press Z to undo a step, or R to start the garden again.');
+  if (G.won) msg = COACH_WIN[cur] || '';
+  else if (!G.tw) msg = G.moves < T.keys.length && key(G.s) === T.keys[G.moves] ? (COACHES[cur][G.moves] || '') : (TOUCH ? 'Not quite. Tap Undo to take a step back, or Restart to try the garden again.' : 'Not quite. Press Z to undo a step, or R to start the garden again.');
   else return;
   if (msg !== T.last) { T.last = msg; const c = $('coach'); c.textContent = msg; c.hidden = !msg; c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop'); }
 }
